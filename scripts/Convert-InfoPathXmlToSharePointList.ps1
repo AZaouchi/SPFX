@@ -120,6 +120,11 @@ function Convert-InfoPathXmlToRows {
         $row = @{}
 
         foreach ($child in @($rowNode.ChildNodes | Where-Object { $_.NodeType -eq [System.Xml.XmlNodeType]::Element })) {
+            $nestedElements = @($child.ChildNodes | Where-Object { $_.NodeType -eq [System.Xml.XmlNodeType]::Element })
+            if ($nestedElements.Count -gt 0) {
+                throw "Detected nested XML under '$($child.LocalName)'. Provide -RowXPath that targets a leaf row node."
+            }
+
             $columnName = $child.LocalName
             if (-not $columnNames.Contains($columnName)) {
                 $null = $columnNames.Add($columnName)
@@ -151,7 +156,7 @@ if (-not (Test-Path -LiteralPath $InputXmlPath)) {
 $csvRows = Convert-InfoPathXmlToRows -Document $xmlDocument -XPath $RowXPath
 
 $outputDirectory = Split-Path -Parent $OutputCsvPath
-if (-not [string]::IsNullOrWhiteSpace($outputDirectory) -and -not (Test-Path -LiteralPath $outputDirectory)) {
+if ($outputDirectory -and -not (Test-Path -LiteralPath $outputDirectory)) {
     $null = New-Item -ItemType Directory -Path $outputDirectory -Force
 }
 
