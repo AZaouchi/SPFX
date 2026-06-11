@@ -7,16 +7,16 @@ Use `scripts/Convert-InfoPathXmlToSharePointList.ps1` to convert repeating InfoP
 ### Usage
 
 ```powershell
-pwsh ./scripts/Convert-InfoPathXmlToSharePointList.ps1 \
-  -InputXmlPath /path/to/form.xml \
+pwsh ./scripts/Convert-InfoPathXmlToSharePointList.ps1 `
+  -InputXmlPath /path/to/form.xml `
   -OutputCsvPath /path/to/sharepoint-import.csv
 ```
 
 If auto-detection does not pick the expected repeating row node, pass a specific XPath (with namespaces if required):
 
 ```powershell
-pwsh ./scripts/Convert-InfoPathXmlToSharePointList.ps1 \
-  -InputXmlPath /path/to/form.xml \
-  -OutputCsvPath /path/to/sharepoint-import.csv \
+pwsh ./scripts/Convert-InfoPathXmlToSharePointList.ps1 `
+  -InputXmlPath /path/to/form.xml `
+  -OutputCsvPath /path/to/sharepoint-import.csv `
   -RowXPath "//my:Item"
 ```

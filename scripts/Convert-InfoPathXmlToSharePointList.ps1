@@ -19,7 +19,7 @@ function Get-NamespaceManager {
     $namespaces = @{}
 
     foreach ($element in $Document.SelectNodes('//*')) {
-        if ($element.Attributes -eq $null) {
+        if ($null -eq $element.Attributes) {
             continue
         }
 
@@ -73,7 +73,7 @@ function Get-AutoDetectedRowNodes {
     }
 
     if ($candidates.Count -eq 0) {
-        throw 'No repeating row nodes were detected. Use -RowXPath to explicitly select the repeating XML node.'
+        throw 'No repeated row nodes were detected. Use -RowXPath to explicitly select the repeating XML node.'
     }
 
     $bestCandidate = $null
